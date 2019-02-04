@@ -1,0 +1,162 @@
+Solution:
+
+# When done, submit this entire file to the autograder.
+
+# Part 1
+
+def sum arr
+  # YOUR CODE HERE
+  arr.inject(0, '+')
+end
+
+def max_2_sum arr
+  # YOUR CODE HERE
+  if(arr.length == 0)
+    return 0
+  elsif(arr.length == 1)
+    return arr.at(0)
+  else
+    if(arr.at(0) > arr.at(1))
+      a = arr.at(0)
+      b = arr.at(1)
+    else
+      b = arr.at(0)
+      a = arr.at(1)
+    end
+    i = 2
+    while i < arr.length
+      if(arr.at(i) > a)
+        b = a
+        a = arr.at(i)
+      elsif(arr.at(i) > b)
+        b = arr.at(i)
+      end
+      i += 1
+    end
+    return a + b
+  end
+end
+
+def sum_to_n? arr, n
+  # YOUR CODE HERE
+  arr.sort!
+  f = 0
+  l = arr.length - 1
+  while f < l
+    if(arr.at(f) + arr.at(l) == n)
+      return true
+    elsif(arr.at(f) + arr.at(l) < n)
+      f += 1
+    else
+      l -= 1
+    end
+  end
+  return false
+end
+
+# Part 2
+
+def hello(name)
+  # YOUR CODE HERE
+  return "Hello, " + name.to_s
+end
+
+def starts_with_consonant? s
+  # YOUR CODE HERE
+  if(s.empty? || !s[0,1][/[a-zA-Z]/])
+    return false
+  end
+  if(s.to_s.upcase.start_with?('A','E','I','O','U'))
+    return false
+  end
+  return true
+end
+
+def binary_multiple_of_4? s
+  # YOUR CODE HERE
+  if(s == "0")
+    return true
+  end
+  if(s.count('0') + s.count('1') != s.size || s[-2,2] != "00")
+    return false
+  end
+  return true
+end
+
+# Part 3
+
+class BookInStock
+  # YOUR CODE HERE
+  attr_accessor :isbn, :price
+    def initialize(isbn, price)
+      if(isbn.empty? || price <= 0)
+        raise ArgumentError
+      end
+      @isbn = isbn
+      @price = price
+    end
+  
+    def price_as_string
+      # puts "$"+ format("%.2f", @price)
+      return "$"+ format("%.2f", @price)
+    end
+end
+
+-****************************************************************************-
+
+Log File:
+
+ec2-user:~/environment/hw-ruby-intro (master) $ rspec
+
+Ruby intro part 1
+  #sum
+    should be defined
+    returns correct sum [20 points]
+    works on the empty array [10 points]
+  #max_2_sum
+    should be defined
+    returns the correct sum [7 points]
+    works even if 2 largest values are the same [3 points]
+    returns zero if array is empty [10 points]
+    returns value of the element if just one element [10 points]
+  #sum_to_n
+    should be defined
+    returns true when any two elements sum to the second argument [30 points]
+    returns false for any single element array [5 points]
+    returns false for an empty array [5 points]
+
+#hello
+  should be defined
+  The hello method returns the correct string [30 points]
+
+#starts_with_consonant?
+  should be defined
+  classifies true cases [10 points]
+  classifies false cases [10 points]
+  works on the empty string [5 points]
+  works on nonletters [5 points]
+
+#binary_multiple_of_4?
+  should be defined
+  classifies valid binary numbers [30 points]
+  rejects invalid binary numbers [10 points]
+
+BookInStock
+  should be defined
+  getters and setters
+    should set ISBN [10 points]
+    should set price [10 points]
+    should be able to change ISBN [10 points]
+    should be able to change price [10 points]
+  constructor
+    should reject invalid ISBN number [10 points]
+    should reject zero price [10 points]
+    should reject negative price [10 points]
+  #price_as_string
+    should be defined
+    should display 33.95 as "$33.95" [10 points]
+    should display 1.1 as $1.10 [10 points]
+    should display 20 as $20.00 [10 points]
+
+Finished in 0.03368 seconds (files took 0.15818 seconds to load)
+34 examples, 0 failures
